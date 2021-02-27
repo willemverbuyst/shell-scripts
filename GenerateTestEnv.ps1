@@ -1,0 +1,1 @@
+1..5 | ForEach-Object {New-Item -Path . -Name "File$_.txt" -ItemType "File"}
