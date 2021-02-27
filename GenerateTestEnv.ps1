@@ -19,13 +19,13 @@ function generateFoldersForMonths ($yearFolderPath) {
     $months = @("JAN", 'FEB', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC')
     ForEach ($month in $months) {
         $montFolder = New-Item -Path $yearFolderPath -Name $month -ItemType Directory
-        generateWeekFolder($montFolder) 
+        generateFolderForWeeks($montFolder) 
     }  
 }
 
-function generateWeekFolder ($monthFolder) {
+function generateFolderForWeeks ($monthFolderPath) {
     Foreach ($i in 1..52) {
-        $weekFolderPath = New-Item -Path $monthFolder -Name "WEEK$i" -ItemType Directory
+        $weekFolderPath = New-Item -Path $monthFolderPath -Name "WEEK$i" -ItemType Directory
         generateTextFiles($weekFolderPath)
     }
 }
