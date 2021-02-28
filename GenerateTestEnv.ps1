@@ -34,6 +34,7 @@ function generateTextFiles ($weekFolderPath) {
     Foreach ($i in 1..3) {
        New-Item -Path $weekFolderPath -Name "FILE-$i.txt" -ItemType File
     }
+    New-Item -Path $weekFolderPath -Name "SPECIAL.txt" -ItemType File
 }
 
 generateFoldersAndFiles
