@@ -18,8 +18,8 @@ function generateFoldersForYears ($newFolderPath) {
 function generateFoldersForMonths ($yearFolderPath) {
     $months = @("JAN", 'FEB', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC')
     ForEach ($month in $months) {
-        $montFolder = New-Item -Path $yearFolderPath -Name $month -ItemType Directory
-        generateFoldersForWeeks($montFolder) 
+        $montFolderPath = New-Item -Path $yearFolderPath -Name $month -ItemType Directory
+        generateFoldersForWeeks($montFolderPath) 
     }  
 }
 
