@@ -1,9 +1,9 @@
-if (Test-Path ./PROJECT) { 
-    Remove-Item -Recurse PROJECT
+if (Test-Path ./PROJECT-1) { 
+    Remove-Item -Recurse PROJECT-1
 }
 
 function generateFoldersAndFiles {
-    $newFolderPath = New-Item -Path . -Name "PROJECT" -ItemType Directory
+    $newFolderPath = New-Item -Path . -Name "PROJECT-1" -ItemType Directory
     generateFoldersForYears $newFolderPath 
 }
 

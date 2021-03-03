@@ -1,9 +1,11 @@
+#Import-Module ./LogFunction.psm1
+
 $ProjectName = "PROJECT-2"
 
-# Clean up to have a fresh start
-if (Test-Path ./$ProjectName) { 
-    Remove-Item -Recurse $ProjectName
-}
+ # Clean up to have a fresh start
+ if (Test-Path ./$ProjectName) { 
+     Remove-Item -Recurse $ProjectName
+ }
 
 function New-MainFolder {
     $NewFolderPath = New-Item `
@@ -14,7 +16,7 @@ function New-MainFolder {
     return $NewFolderPath
 }
 
-function New-SubFoldersAndFiles {
+function New-SubFoldersAndFiles ($NewFolderPath){
     ForEach ($i in 1..4) {
 
         $NewSubFolderPath = New-Item `
@@ -29,40 +31,34 @@ function New-SubFoldersAndFiles {
     }
 }
 
-function Get-FilesToLog {
+function Get-FilesToLog ($NewFolderPath){
     $Files = Get-ChildItem `
-    -Path ./$ProjectName `
+    -Path $NewFolderPath `
     -Filter "File1.txt" `
     -Recurse
 
-    # For development
-    Write-Host ($Files | Out-String) -ForegroundColor red
-
-    Return $Files
+   Return $Files.FullName
 }
 
-function Write-Message ($NewFolderPath, $LogMessage) {
-    if (-not (Test-Path $NewFolderPath/LOGS)) { 
-        New-Item `
-            -Path $NewFolderPath `
-            -Name 'LOGS' `
-            -ItemType Directory
+function Write-Message ($NewFolderPath, $Messsage) {
+    $prefix = Get-Date -Format "yyyyMMdd"
+    if ( -not (Test-Path $NewFolderPath/LOG)) { 
+        $LogFolderPath = New-Item -Path $NewFolderPath -Name "LOG" -ItemType Directory
     }
 
-    New-Item `
-        -Path $NewFolderPath `
-        -Name "Log.txt" `
-        -ItemType File
-
-    Add-Content `
-        -Path $NewFolderPath/Log.txt `
-        -Value $LogMessage
+    $LogFile = New-Item `
+        -Path $LogFolderPath `
+        -Name "$prefix-log.txt" `
+        -ItemType File `
+        -Force
+    
+    Add-Content $LogFile $Messsage
 }
 
 
 $NewFolderPath = New-MainFolder
 New-SubFoldersAndFiles $NewFolderPath 
-$Files = Get-FilesToLog
+$Files = Get-FilesToLog $NewFolderPath
 Write-Message $NewFolderPath $Files
 
 
