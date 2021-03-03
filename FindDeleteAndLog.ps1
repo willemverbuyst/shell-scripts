@@ -1,4 +1,4 @@
-#Import-Module ./LogFunction.psm1
+Import-Module ./LogFunction.psm1
 
 $ProjectName = "PROJECT-2"
 
@@ -40,26 +40,9 @@ function Get-FilesToLog ($NewFolderPath){
    Return $Files.FullName
 }
 
-function Write-Message ($NewFolderPath, $Messsage) {
-    $prefix = Get-Date -Format "yyyyMMdd"
-    if ( -not (Test-Path $NewFolderPath/LOG)) { 
-        $LogFolderPath = New-Item -Path $NewFolderPath -Name "LOG" -ItemType Directory
-    }
-
-    $LogFile = New-Item `
-        -Path $LogFolderPath `
-        -Name "$prefix-log.txt" `
-        -ItemType File `
-        -Force
-    
-    Add-Content $LogFile $Messsage
-}
-
-
 $NewFolderPath = New-MainFolder
 New-SubFoldersAndFiles $NewFolderPath 
 $Files = Get-FilesToLog $NewFolderPath
-Write-Message $NewFolderPath $Files
-
+Write-Log $NewFolderPath $Files
 
 
