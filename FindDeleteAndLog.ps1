@@ -35,7 +35,7 @@ function New-SubFoldersAndFiles ($NewFolderPath){
 function Get-FilesToLog ($NewFolderPath){
     $Files = Get-ChildItem `
     -Path $NewFolderPath `
-    -Filter "File.txt" `
+    -Filter "File1.txt" `
     -Recurse
 
    $TextFiles = @() 

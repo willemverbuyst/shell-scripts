@@ -32,7 +32,7 @@ function Write-Log {
 
         [parameter(Mandatory=$False)]
         [string[]] 
-        $Message
+        $Message = "Nothing to log"
     )
 
     $Prefix = Get-Date -Format "yyyyMMdd"
