@@ -26,23 +26,29 @@ function New-SubFoldersAndFiles ($NewFolderPath){
 
         New-Item `
             -Path $NewSubFolderPath.FullName `
-            -Name "File1.txt" `
-            -ItemType File
+            -Name "File.txt" `
+            -ItemType File `
+            > $Null
     }
 }
 
 function Get-FilesToLog ($NewFolderPath){
     $Files = Get-ChildItem `
     -Path $NewFolderPath `
-    -Filter "File1.txt" `
+    -Filter "File.txt" `
     -Recurse
 
-   Return $Files.FullName
+   $TextFiles = @() 
+   Foreach ($File in $Files) {
+        $TextFiles += $File.FullName
+    }
+
+   Return $TextFiles
 }
 
 $NewFolderPath = New-MainFolder
 New-SubFoldersAndFiles $NewFolderPath 
-$Files = Get-FilesToLog $NewFolderPath
-Write-Log $NewFolderPath $Files
+$ContentToLog = Get-FilesToLog $NewFolderPath 
+Write-Log $NewFolderPath $ContentToLog
 
 
