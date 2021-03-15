@@ -6,13 +6,13 @@ class Logger {
     
 
     [void]LogInfo([string]$message) {
-        Write-Host $this.TimeStamp "| INFO `t|" $message
+        Add-Content $this.LogFile ($this.TimeStamp + "| INFO `t`t|" + $message)
     }
     [void]LogError([string]$message) {
-        Write-Host $this.TimeStamp "| ERROR `t|" $message
+        Add-Content $this.LogFile ($this.TimeStamp + "| ERROR `t`t|" + $message)
     }
     [void]LogWarning([string]$message) {
-        Write-Host $this.TimeStamp "| WARNING `t|" $message
+        Add-Content $this.LogFile ($this.TimeStamp + "| WARNING `t|" + $message)
     }
 
     [void]SetLogFolderAndFile([string]$NewFolderPath) {

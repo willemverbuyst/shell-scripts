@@ -7,8 +7,8 @@ $Log = [Logger]::new()
 
 $Log.SetLogFolderAndFile((Split-Path $MyInvocation.PSCommandPath -Parent))
 
-$Log.LogError("errrrrrrrrrrror")
-$Log.LogInfo("inforrrrrrrrmation")
+$Log.LogError("Errrrrrrrrrrror")
+$Log.LogInfo("Inforrrrrrrrmation")
 $Log.LogWarning("Warrrrrrrning")
 
 Write-Host $Log.LogFile
