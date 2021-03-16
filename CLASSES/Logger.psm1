@@ -1,9 +1,9 @@
 class Logger {
-    $TimeStamp = (Get-Date -Format "yyyy-MM-dd")
-    $Prefix = (Get-Date -Format "yyyyMMdd")
-    $MainPath
-    $LogFolder
-    $LogFile
+    [string]$TimeStamp = (Get-Date -Format "yyyy-MM-dd")
+    [string]$Prefix = (Get-Date -Format "yyyyMMdd")
+    [string]$MainPath
+    [string]$LogFolder
+    [string]$LogFile
 
     Logger ([string]$MainPath) {
         $this.Mainpath = $MainPath
