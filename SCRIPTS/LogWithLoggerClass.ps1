@@ -2,16 +2,15 @@ Using module '../CLASSES/Logger.psm1'
 
 
 function Write-Messages {
-$Log = [Logger]::new()
 
-
-$Log.SetLogFolderAndFile((Split-Path $MyInvocation.PSCommandPath -Parent))
+$MainPath = ((Split-Path $MyInvocation.PSCommandPath -Parent))
+$Log = [Logger]::new($MainPath)
 
 $Log.LogError("Errrrrrrrrrrror")
 $Log.LogInfo("Inforrrrrrrrmation")
 $Log.LogWarning("Warrrrrrrning")
+$Log.LogInfo("Classes are fun!")
 
-Write-Host $Log.LogFile
 }
 
 Write-Messages
