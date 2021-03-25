@@ -1,10 +1,10 @@
 # For dev
-Remove-Item ./TEST_ENV -Recurse
+Remove-Item ../ENV/TEST_ENV -Recurse
 
 function Invoke-Creation {
-    $baseDir = "./TEST_ENV"
+    $baseDir = "../ENV/TEST_ENV"
     $numberOflevels = 2
-    $numberOfSubFolders = 2
+    $numberOfSubFolders = 3
 
     New-FolderTree $baseDir $numberOflevels $numberOfSubFolders
 }
@@ -15,7 +15,7 @@ function New-FolderTree ($baseDir, $numberOfLevels, $numberOfSubFolders) {
 
     foreach ($numberOfLevel in 1..$numberOflevels) {
         $subFolderNamePrefix = "L$numberOfLevel"
-        $allFolders = Get-ChildItem . -Recurse -Directory
+        $allFolders = Get-ChildItem ../ENV -Recurse -Directory
         $lastFolders = Get-LastDirectories $allFolders
 
         for ($i = 0; $i -lt $lastFolders.count; $i++) {
