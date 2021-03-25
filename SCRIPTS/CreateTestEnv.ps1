@@ -1,49 +1,54 @@
+# For dev
 Remove-Item ./TEST_ENV -Recurse
 
-function New-SubFolders($d, $subDir, $number) {
-    foreach ($i in 1..$number) {
-        New-Item -Path $d -Name ($subDir + "_Sub" + $i) -ItemType Directory > $null
-    }
+function Invoke-Creation {
+    $baseDir = "./TEST_ENV"
+    $numberOflevels = 2
+    $numberOfSubFolders = 2
+
+    New-FolderTree $baseDir $numberOflevels $numberOfSubFolders
 }
 
-function New-FolderTree {
-    $baseDir = "./TEST_ENV"
-    $numberOfLevels = 1
-    $numberOfSubFolders = 1
 
+function New-FolderTree ($baseDir, $numberOfLevels, $numberOfSubFolders) {
     New-Item $baseDir -ItemType Directory -Force > $null
 
-    foreach ($l in 1..$numberOfLevels) {
-        $subDir = "L$l"
-        $dirs = Get-ChildItem . -Recurse -Directory
-        $xdirs = Get-DeepestsFolders $dirs
-      
-        if ($xdirs.count -gt 1) {          
-           for ($i = 0; $i -lt $xdirs.count; $i++) {
-               New-SubFolders $xdirs[$i] $subDir $numberOfSubFolders
-          }
-        }
-        Else {
-            New-SubFolders $baseDir $subDir $numberOfSubFolders
+    foreach ($numberOfLevel in 1..$numberOflevels) {
+        $subFolderNamePrefix = "L$numberOfLevel"
+        $allFolders = Get-ChildItem . -Recurse -Directory
+        $lastFolders = Get-LastDirectories $allFolders
+
+        for ($i = 0; $i -lt $lastFolders.count; $i++) {
+            New-SubFolders $lastFolders[$i] $subFolderNamePrefix $numberOfSubFolders
         }
     }
 }
 
-function Get-DeepestsFolders ($dirs) {
-    $directories = New-Object System.Collections.ArrayList
+function Get-LastDirectories ($dirs) {
+    $lastDirectories = New-Object System.Collections.ArrayList
     foreach ($d in $dirs) {
         $t = Split-Path $d.FullName -Parent
-        if ($directories -notcontains $t) {
-            $directories.add($d.FullName) > $null
+        if ($lastDirectories -notcontains $t) {
+            $lastDirectories.add($d.FullName) > $null
         }
         Else {
-            $directories.Remove($t)
-            $directories.add($d.FullName) > $null
+            $lastDirectories.Remove($t)
+            $lastDirectories.add($d.FullName) > $null
         }
     }
-
-    return $directories
+    # Extra comma to return an array even with one element
+    return ,$lastDirectories
 }
 
 
-New-FolderTree
+function New-SubFolders($lastFolder, $subFolderNamePrefix, $numberOfSubFolders) {
+    foreach ($i in 1..$numberOfSubFolders) {
+        New-Item `
+            -Path $lastFolder `
+            -Name ($subFolderNamePrefix + "_Sub" + $i) `
+            -ItemType Directory > $null
+    }
+}
+
+
+Invoke-Creation
