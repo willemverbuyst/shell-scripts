@@ -27,12 +27,7 @@ function New-FolderTree ($baseDir, $numberOfLevels, $numberOfSubFolders) {
 function Get-LastDirectories ($dirs) {
     $lastDirectories = New-Object System.Collections.ArrayList
     foreach ($d in $dirs) {
-        $t = Split-Path $d.FullName -Parent
-        if ($lastDirectories -notcontains $t) {
-            $lastDirectories.add($d.FullName) > $null
-        }
-        Else {
-            $lastDirectories.Remove($t)
+        if ($null -eq ($d.EnumerateDirectories()).count) {
             $lastDirectories.add($d.FullName) > $null
         }
     }
