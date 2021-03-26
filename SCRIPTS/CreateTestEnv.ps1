@@ -3,8 +3,8 @@ Remove-Item ../ENV/TEST_ENV -Recurse
 
 function Invoke-Creation {
     $baseDir = "../ENV/TEST_ENV"
-    $numberOflevels = 2
-    $numberOfSubFolders = 3
+    $numberOflevels = 3
+    $numberOfSubFolders = 4
 
     New-FolderTree $baseDir $numberOflevels $numberOfSubFolders
 }
